@@ -10,9 +10,30 @@ const StyledBackLink = styled(StyledLink)`
 
 export default function CreatePlacePage() {
   const router = useRouter();
+  //const { mutate } = useSWR("/api/places");
 
-  function addPlace(place) {
-    console.log("Place added (but not really...)");
+  async function addPlace(place) {
+    /* event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const productData = Object.fromEntries(formData); */
+
+    const response = await fetch("/api/places", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(place),
+    });
+
+    if (!response.ok) {
+      console.error(response.status);
+      return;
+    }
+
+    //mutate();
+    router.push("/");
+    //event.target.reset();
   }
 
   return (
